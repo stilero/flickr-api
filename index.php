@@ -16,17 +16,26 @@ define('PATH_TWITTER_LIBRARY', dirname(__FILE__).'/library/');
 foreach (glob(PATH_TWITTER_LIBRARY."*.php") as $filename){
     require_once $filename;
 }
+foreach (glob(PATH_TWITTER_LIBRARY.'oauth/'."*.php") as $filename){
+    require_once $filename;
+}
 foreach (glob(PATH_TWITTER_LIBRARY.'authentication/'."*.php") as $filename){
     require_once $filename;
 }
-foreach (glob(PATH_TWITTER_LIBRARY.'oauth/'."*.php") as $filename){
+foreach (glob(PATH_TWITTER_LIBRARY.'endpoints/'."*.php") as $filename){
     require_once $filename;
 }
 require_once dirname(__FILE__).'/jerror.php';
 $imagefile = dirname(__FILE__).'/joomla_logo_black.jpg';
+$token = '72157639226524196-c88cad77e7d51500';
 $api_key = 'a7aa0fcf048ed05cc2257645cbf9bc02';
 $api_secret = '2298ca9011e3c640';
+$Flickr = new StileroFlickr($api_key, $api_secret);
+$Flickr->setAccessToken($token);
+$Flickr->init();
 $Api = new StileroFlickrApi($api_key, $api_secret);
-$Url = new StileroFlickrUrl($Api);
-print $Url->getUrl(StileroFlickrPermissions::WRITE);
+$People = new StileroFlickrPeople($Api, $token);
+$response = $People->findByUsername('streetpeople');
+$response = $People->getInfoFromId('95214447@N03');
+var_dump($response);
 ?>

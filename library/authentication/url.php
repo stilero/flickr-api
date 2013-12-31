@@ -25,20 +25,36 @@ class StileroFlickrUrl{
     public function __construct(StileroFlickrApi $Api) {
         $this->Api = $Api;
     }
-    
     /**
-     * Builds and returns the url for authentication of the request
+     * Builds  the url for authentication of the request
      * @param string $perms Permission string (read, write, delete) Use StileroFlickrPermission constants
-     * @return string Url
+     * @return void
      */
-    public function getUrl($perms='read'){
+    protected function buildUrl($perms){
         $params = array(
             'api_key' => $this->Api->key,
             'perms' => $perms
         );
         $signature = StileroFlickrSignature::getSignature($params, $this->Api);
         $params['api_sig'] = $signature;
-        $url = self::API_BASE_URL.'?'.http_build_query($params);
-        return $url;
+        $this->url = self::API_BASE_URL.'?'.http_build_query($params);
     }
+    /**
+     * Builds and returns the url for authentication of the request
+     * @param string $perms Permission string (read, write, delete) Use StileroFlickrPermission constants
+     * @return string Url
+     */
+    public function getUrl($perms='read'){
+        $this->buildUrl($perms);
+        return $this->url;
+    }
+    
+    /**
+     * Redirects the user to the FB LoginDialog by printing out a JScript.
+     */
+    public function redirectToUrl($perms = 'read'){
+        $this->buildUrl($perms);
+        print "<script> top.location.href='".$this->url."'</script>";
+    }
+    
 }
