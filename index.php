@@ -37,6 +37,7 @@ $Api = new StileroFlickrApi($api_key, $api_secret);
 $Photouploader = new StileroFlickrPhotouploader($Api, $auth_token);
 $People = new StileroFlickrPeople($Api, $auth_token);
 $Photos = new StileroFlickrPhotos($Api, $auth_token);
+$Photoscomments = new StileroFlickrPhotoscomments($Api, $auth_token);
 $title = 'Imagetitle';
 $description = 'Imagedescription';
 $tags = 'tag6 tag7 tag8';
@@ -44,6 +45,7 @@ $tags = 'tag6 tag7 tag8';
 //$response = $Photouploader->replace($file, '11685505596');
 //$response = $People->findByUsername('stilero_com');
 //$response = $People->getPhotos('113011993@N02');
-$response = $Photos->setTags('11685505596', $tags);
+//$response = $Photos->setTags('11685505596', $tags);
+$response = $Photoscomments->getList('11685505596');
 //var_dump($response);
 ?>
