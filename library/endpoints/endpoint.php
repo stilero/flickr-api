@@ -29,7 +29,8 @@ class StileroFlickrEndpoint extends StileroFlickrCommunicator{
     public function request(array $params, $url){
         $auth_params = array(
             'api_key' => $this->Api->key,
-            'auth_token' => $this->auth_token
+            'auth_token' => $this->auth_token,
+            'format' => 'json'
         );
         $combined_params = array_merge($auth_params, $params);
         $signature = StileroFlickrSignature::getSignature($combined_params, $this->Api);
