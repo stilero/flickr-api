@@ -20,12 +20,26 @@ class StileroFlickr{
     protected $Frob;
     protected $perms;
     public $People;
+    public $Photos;
+    public $Photoscomments;
+    public $Photouploader;
     public $access_token;
     
     public function __construct($api_key, $api_secret, $perms='read') {
         $this->Api = new StileroFlickrApi($api_key, $api_secret);
         $this->Frob = new StileroFlickrFrob();
         $this->perms = $perms;
+        return $this;
+    }
+    /**
+     * Initializes all endpoints
+     */
+    private function _endpoints(){
+        $this->People = new StileroFlickrPeople($this->Api, $this->access_token);
+        $this->Photos = new StileroFlickrPhotos($this->Api, $this->access_token);
+        $this->Photoscomments = new StileroFlickrPhotoscomments($this->Api, $this->access_token);
+        $this->Photouploader = new StileroFlickrPhotouploader($this->Api, $this->access_token);
+        return $this;
     }
     /**
      * Initializes the API
@@ -38,11 +52,12 @@ class StileroFlickr{
         }else if( StileroFlickrFrob::hasFrobInGetRequest() ){
             $this->Frob->fetchFrob();
             $Authtoken = new StileroFlickrAuthtoken($this->Api, $this->Frob);
-            $response = $Authtoken->getToken();
+            $Authtoken->getToken();
+            $this->access_token = $Authtoken->token;
+        }if(isset($this->access_token)){
+            $this->_endpoints();
         }
-        if(isset ($this->access_token)){
-            $this->People = new StileroFlickrPeople($this->Api, $this->access_token);
-        }
+        return $this;
     }
     
     public function setAccessToken($token){

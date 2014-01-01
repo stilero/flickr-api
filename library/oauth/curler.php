@@ -102,9 +102,10 @@ class StileroFlickrCurler{
         $this->init($useAuth, $type);
         $this->curl = curl_init();
         curl_setopt($this->curl, CURLOPT_URL,$url);
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         $this->requestType($type);
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $this->params);
-        $response=curl_exec ($this->curl);
+        $response=curl_exec($this->curl);
         curl_close ($this->curl);
         return $response;
     }
