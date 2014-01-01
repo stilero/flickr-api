@@ -23,6 +23,7 @@ class StileroFlickrPhotos extends StileroFlickrCurler{
     const METHOD_GET_EXIF = 'flickr.photos.getExif';
     const METHOD_GET_INFO = 'flickr.photos.getInfo';
     const METHOD_SET_TAGS = 'flickr.photos.setTags';
+    const METHOD_GET_FAVOURITES = 'flickr.photos.getFavorites';
     
     public function __construct(\StileroFlickrApi $Api, $auth_token) {
         parent::__construct($Api, $auth_token);
@@ -104,5 +105,16 @@ class StileroFlickrPhotos extends StileroFlickrCurler{
         );
         return $this->curlIt(self::API_URL, $params);
     }
-    
+    /**
+     * Returns the list of people who have favorited a given photo.
+     * @param string $photo_id The id of the photo
+     * @return string RAW JSON Response
+     */
+    public function getFavourites($photo_id){
+        $params = array(
+            'method' => self::METHOD_GET_FAVOURITES,
+            'photo_id' => $photo_id
+        );
+        return $this->curlIt(self::API_URL, $params);
+    }
 }
