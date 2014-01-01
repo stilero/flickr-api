@@ -44,6 +44,6 @@ $tags = 'tag6 tag7 tag8';
 //$response = $Photouploader->replace($file, '11685505596');
 //$response = $People->findByUsername('stilero_com');
 //$response = $People->getPhotos('113011993@N02');
-$response = $Photos->addTags('11685505596', $tags);
+$response = $Photos->setTags('11685505596', $tags);
 //var_dump($response);
 ?>
