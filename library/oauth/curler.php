@@ -47,25 +47,30 @@ class StileroFlickrCurler{
         $this->Api = $Api;
         $this->auth_token = $auth_token;
     }
-    
+    /**
+     * Sets the response format to JSON
+     */
+    private function format(){
+        $this->params['format'] = 'json';
+    }
     /**
      * Adds the auth parts to the params
      */
-    protected function authParams(){
+    private function authParams(){
         $this->params['api_key'] = $this->Api->key;
         $this->params['auth_token'] = $this->auth_token;
     }
     /**
      * Adds a signature to the request
      */
-    protected function signature(){
+    private function signature(){
         $this->params['api_sig'] = StileroFlickrSignature::getSignature($this->params, $this->Api);
     }
     /**
      * Sets the request type parameters to the curler
      * @param string $type The Request type. Use the constants of this class. Example (GET, POST)
      */
-    protected function requestType($type){
+    private function requestType($type){
         if($type == self::CURL_REQUEST_TYPE_POST){
             curl_setopt($this->curl, CURLOPT_POST,1);
         }else if($type == self::CURL_REQUEST_TYPE_GET){
@@ -76,10 +81,11 @@ class StileroFlickrCurler{
      * Initializes the curler
      * @param boolean $useAuth Set to true for an authorized request
      */
-    protected function init($useAuth){
+    private function init($useAuth){
         if($useAuth){
             $this->authParams();
         }
+        $this->format();
         $this->signature();
     }
     
@@ -91,7 +97,7 @@ class StileroFlickrCurler{
      * @param string $type The request type. Use the constants of this class. Example (POST,GET)
      * @return string The raw response
      */
-    public function curlIt($url, array $params, $useAuth=true, $type='POST'){
+    protected function curlIt($url, array $params, $useAuth=true, $type='POST'){
         $this->params = $params;
         $this->init($useAuth, $type);
         $this->curl = curl_init();

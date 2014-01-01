@@ -27,18 +27,23 @@ foreach (glob(PATH_TWITTER_LIBRARY.'endpoints/'."*.php") as $filename){
 }
 require_once dirname(__FILE__).'/jerror.php';
 $file = dirname(__FILE__).'/joomla_logo_black.jpg';
-$token = '72157639226524196-c88cad77e7d51500';
+$auth_token = '72157639226524196-c88cad77e7d51500';
 $api_key = 'a7aa0fcf048ed05cc2257645cbf9bc02';
 $api_secret = '2298ca9011e3c640';
 $Flickr = new StileroFlickr($api_key, $api_secret);
-$Flickr->setAccessToken($token);
+$Flickr->setAccessToken($auth_token);
 $Flickr->init();
 $Api = new StileroFlickrApi($api_key, $api_secret);
-$Photo = new StileroFlickrPhoto($Api, $token);
+$Photouploader = new StileroFlickrPhotouploader($Api, $auth_token);
+$People = new StileroFlickrPeople($Api, $auth_token);
+$Photos = new StileroFlickrPhotos($Api, $auth_token);
 $title = 'Imagetitle';
 $description = 'Imagedescription';
-$tags = 'tag1 tag2 tag3';
-//$response = $Photo->upload($file, $title, $description, $tags);
-$response = $Photo->replace($file, '11685505596');
-var_dump($response);
+$tags = 'tag6 tag7 tag8';
+//$response = $Photouploader->upload($file, $title, $description, $tags);
+//$response = $Photouploader->replace($file, '11685505596');
+//$response = $People->findByUsername('stilero_com');
+//$response = $People->getPhotos('113011993@N02');
+$response = $Photos->addTags('11685505596', $tags);
+//var_dump($response);
 ?>

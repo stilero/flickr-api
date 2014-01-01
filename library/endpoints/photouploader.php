@@ -1,6 +1,6 @@
 <?php
 /**
- * Flickr_API
+ * Photo Class for uploading and replacing photos
  *
  * @version  1.0
  * @package Stilero
@@ -14,10 +14,11 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access'); 
 
-class StileroFlickrPhoto{
+class StileroFlickrPhotouploader{
     
     protected $Api;
     protected $auth_token;
+    
     const API_URL_UPLOAD = 'http://up.flickr.com/services/upload/';
     const API_URL_REPLACE = 'http://api.flickr.com/services/replace/';
     const SAFETY_LEVEL_SAFE = 1;
