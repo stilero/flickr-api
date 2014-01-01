@@ -38,6 +38,7 @@ $Photo = new StileroFlickrPhoto($Api, $token);
 $title = 'Imagetitle';
 $description = 'Imagedescription';
 $tags = 'tag1 tag2 tag3';
-$response = $Photo->upload($file, $title, $description, $tags);
+//$response = $Photo->upload($file, $title, $description, $tags);
+$response = $Photo->replace($file, '11685505596');
 var_dump($response);
 ?>

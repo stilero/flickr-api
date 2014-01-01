@@ -14,13 +14,12 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access'); 
 
-class StileroFlickrPeople extends StileroFlickrEndpoint{
+class StileroFlickrPeople extends StileroFlickrCurler{
     
     const API_URL = 'http://flickr.com/services/rest/';
     
     public function __construct(\StileroFlickrApi $Api, $auth_token) {
         parent::__construct($Api, $auth_token);
-        return $this;
     }
     
     public function getInfoFromId($id){
@@ -28,7 +27,7 @@ class StileroFlickrPeople extends StileroFlickrEndpoint{
             'method' => 'flickr.people.getInfo',
             'user_id' => $id
         );
-        return $this->request($params, self::API_URL);
+        return $this->curlIt(self::API_URL, $params);
     }
     
     public function findByUsername($username){
@@ -36,6 +35,6 @@ class StileroFlickrPeople extends StileroFlickrEndpoint{
             'method' => 'flickr.people.findByUsername',
             'username' => $username
         );
-        return $this->request($params, self::API_URL);
+        return $this->curlIt(self::API_URL, $params);
     }
 }
