@@ -27,7 +27,10 @@ class StileroFlickr{
         $this->Frob = new StileroFlickrFrob();
         $this->perms = $perms;
     }
-    
+    /**
+     * Initializes the API
+     * If a token is not set then you will be redirected to the auth page
+     */
     public function init(){
         if( !isset($this->access_token) && !StileroFlickrFrob::hasFrobInGetRequest() ){
             $Url = new StileroFlickrUrl($this->Api);
