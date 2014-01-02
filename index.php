@@ -25,6 +25,9 @@ foreach (glob(PATH_TWITTER_LIBRARY.'authentication/'."*.php") as $filename){
 foreach (glob(PATH_TWITTER_LIBRARY.'endpoints/'."*.php") as $filename){
     require_once $filename;
 }
+foreach (glob(PATH_TWITTER_LIBRARY.'helpers/'."*.php") as $filename){
+    require_once $filename;
+}
 require_once dirname(__FILE__).'/jerror.php';
 $file = dirname(__FILE__).'/joomla_logo_black.jpg';
 $auth_token = '72157639226524196-c88cad77e7d51500';
@@ -36,6 +39,7 @@ $Flickr->init();
 //$response = $Flickr->Photoscomments->getList('11685505596');
 $response = $Flickr->Photouploader->upload($file, 'Testar', 'En beskrivning', 'tagg1 tagg2');
 $descoded = StileroFlickrResponse::handle($response);
+var_dump($descoded);
 //var_dump($response);
 //$Api = new StileroFlickrApi($api_key, $api_secret);
 //$Photouploader = new StileroFlickrPhotouploader($Api, $auth_token);
