@@ -2,7 +2,7 @@
 /**
  * Photo Class for uploading and replacing photos
  *
- * @version  1.0
+ * @version  1.1
  * @package Stilero
  * @subpackage Flickr_API
  * @author Daniel Eliasson <daniel at stilero.com>

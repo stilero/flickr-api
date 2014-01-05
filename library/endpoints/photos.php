@@ -24,6 +24,13 @@ class StileroFlickrPhotos extends StileroFlickrCurler{
     const METHOD_GET_INFO = 'flickr.photos.getInfo';
     const METHOD_SET_TAGS = 'flickr.photos.setTags';
     const METHOD_GET_FAVOURITES = 'flickr.photos.getFavorites';
+    const IMAGE_SIZE_MEDIUM = 'z_d';
+    const IMAGE_SIZE_LARGE = 'b_d';
+    const IMAGE_SIZE_SMALL = 'n_d';
+    const IMAGE_SIZE_THUMB = 't_d';
+    const IMAGE_SIZE_SQUARE_75 = 's_d';
+    const IMAGE_SIZE_SQUARE_100 = 'q_d';
+    const IMAGE_SIZE_ORIGINAL = 'o_d';
     
     public function __construct(\StileroFlickrApi $Api, $auth_token) {
         parent::__construct($Api, $auth_token);
@@ -116,5 +123,113 @@ class StileroFlickrPhotos extends StileroFlickrCurler{
             'photo_id' => $photo_id
         );
         return $this->curlIt(self::API_URL, $params);
+    }
+    /**
+     * Returns the image src url based on the size
+     * @param string $photo_id
+     * @param string $size Use constants IMAGE_SIZE
+     * @return string Image src url
+     */
+    protected function getImage($photo_id, $sizeconst){
+        $size = '';
+        switch ($sizeconst) {
+            case self::IMAGE_SIZE_LARGE:
+                $size = self::IMAGE_SIZE_LARGE;
+                break;
+            case self::IMAGE_SIZE_MEDIUM:
+                $size = self::IMAGE_SIZE_MEDIUM;
+                break;
+            case self::IMAGE_SIZE_ORIGINAL:
+                $size = self::IMAGE_SIZE_ORIGINAL;
+                break;
+            case self::IMAGE_SIZE_SMALL:
+                $size = self::IMAGE_SIZE_SMALL;
+                break;
+            case self::IMAGE_SIZE_SQUARE_100:
+                $size = self::IMAGE_SIZE_SQUARE_100;
+                break;
+            case self::IMAGE_SIZE_SQUARE_75:
+                $size = self::IMAGE_SIZE_SQUARE_75;
+                break;
+            case self::IMAGE_SIZE_THUMB:
+                $size = self::IMAGE_SIZE_THUMB;
+                break;
+            default:
+                break;
+        }
+        $response = $this->getInfo($photo_id);
+        $decoded = StileroFlickrResponse::handle($response);
+        $protocol = 'http://';
+        $farm = 'farm'.$decoded->photo->farm.'.';
+        $host = 'staticflickr.com/';
+        $server = $decoded->photo->server.'/';
+        $imgid = $decoded->photo->id.'_';
+        $secret = $decoded->photo->secret.'_';
+        $type = '.jpg';
+        $src = $protocol.$farm.$host.$server.$imgid.$secret.$size.$type;
+        return $src;
+    }
+    /**
+     * Returns the medium image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageMedium($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_MEDIUM);
+        return $src;
+    }
+    /**
+     * Returns the large image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageLarge($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_LARGE);
+        return $src;
+    }
+    /**
+     * Returns the small image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageSmall($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_SMALL);
+        return $src;
+    }
+    /**
+     * Returns the original image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageOriginal($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_ORIGINAL);
+        return $src;
+    }
+    /**
+     * Returns the square 100 image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageSquare100($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_SQUARE_100);
+        return $src;
+    }
+    /**
+     * Returns the Square 75 image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageSquare75($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_SQUARE_75);
+        return $src;
+    }
+    /**
+     * Returns the thumb image src
+     * @param string $photo_id
+     * @return string Image source url
+     */
+    public function getImageThumb($photo_id){
+        $src = $this->getImage($photo_id, self::IMAGE_SIZE_THUMB);
+        return $src;
     }
 }
